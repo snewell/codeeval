@@ -12,8 +12,16 @@ add_challenge(0002) #Longest Lines
 add_challenge(0008) #Reverse Words
 
 add_challenge(0012) #First Non-Repeated Character
+add_challenge(0015) #Endianness
+add_challenge(0019) #Bit Positions
+
+add_challenge(0020) #Lowercase
+add_challenge(0022) #Fibonacci Series
+add_challenge(0023) #Multiplication Tables
+add_challenge(0025) #Odd Numbers
 
 add_challenge(0031) #Rightmost Char
+add_challenge(0039) #Happy Numbers
 
 add_challenge(0041) #Array Absurdity
 add_challenge(0048) #Discount Offers
