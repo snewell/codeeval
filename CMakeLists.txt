@@ -19,10 +19,13 @@ add_challenge(0048) #Discount Offers
 
 add_challenge(0051) #Closest Pair
 
+add_challenge(0064) #Climbing Stairs
+
 add_challenge(0076) #String Rotation
 
 add_challenge(0108) #Computer Terminal
 
 add_challenge(0192) #Compare Points
 
+add_challenge(0207) #Which Way is Faster?
 add_challenge(0227) #Real Fake
