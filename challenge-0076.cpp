@@ -5,17 +5,6 @@
 
 namespace
 {
-    template <typename T>
-    bool subEqual(T lStart, T lEnd, T rStart, T rEnd)
-    {
-        while((lStart != lEnd) && (*lStart == *rStart))
-        {
-            ++lStart;
-            ++rStart;
-        }
-        return (lStart == lEnd);
-    }
-
     bool isRotation(std::string lhs, std::string rhs)
     {
         if(lhs.length() == rhs.length())
@@ -30,8 +19,8 @@ namespace
                 auto diff = std::distance(rStart, rEnd);
                 auto lMiddle = lStart;
                 std::advance(lMiddle, diff);
-                if(subEqual(lStart, lMiddle, rStart, rEnd) &&
-                   subEqual(lMiddle, lEnd, std::begin(rhs), rStart))
+                if(std::equal(lStart, lMiddle, rStart) &&
+                   std::equal(lMiddle, lEnd, std::begin(rhs)))
                 {
                     return true;
                 }
