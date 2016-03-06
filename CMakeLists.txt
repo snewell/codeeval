@@ -37,6 +37,7 @@ add_challenge(0076) #String Rotation
 add_challenge(0108) #Computer Terminal
 
 add_challenge(0192) #Compare Points
+add_challenge(0197) #Column Names
 
 add_challenge(0200) #Sort Matrix Columns
 add_challenge(0207) #Which Way is Faster?
