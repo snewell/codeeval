@@ -11,15 +11,7 @@ namespace
         auto middle = std::begin(val);
         std::advance(middle, std::distance(std::begin(val), std::end(val)) / 2);
         auto rev = std::string::const_reverse_iterator{std::end(val)};
-        auto mismatch = std::find_if(std::begin(val), middle, [&rev](char ch) {
-            if(ch != *rev)
-            {
-                return true;
-            }
-            ++rev;
-            return false;
-        });
-        return mismatch == middle;
+        return std::equal(std::begin(val), middle, val.rbegin());
     }
 
     template <typename T>
