@@ -11,6 +11,7 @@ add_challenge(0001) #Fizzbuzz
 add_challenge(0002) #Longest Lines
 add_challenge(0008) #Reverse Words
 
+add_challenge(0010) #Mth to Last Element
 add_challenge(0012) #First Non-Repeated Character
 add_challenge(0014) #String Permutations
 add_challenge(0015) #Endianness
