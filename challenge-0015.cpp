@@ -1,16 +1,11 @@
 #include <iostream>
+#include <string>
 
 int main()
 {
-    int test = 0xAABB;
-    char * p = reinterpret_cast<char *>(&test);
-    if((*p) == 0xAA)
-    {
-        std::cout << "BigEndian\n";
-    }
-    else
-    {
-        std::cout << "LittleEndian\n";
-    }
+    std::string const messages[] = {"BigEndian\n", "LittleEndian\n"};
+    auto test = 1;
+    auto * p = reinterpret_cast<char *>(&test);
+    std::cout << messages[*p];
     return 0;
 }
