@@ -12,6 +12,7 @@ add_challenge(0002) #Longest Lines
 add_challenge(0008) #Reverse Words
 
 add_challenge(0012) #First Non-Repeated Character
+add_challenge(0014) #String Permutations
 add_challenge(0015) #Endianness
 add_challenge(0019) #Bit Positions
 
