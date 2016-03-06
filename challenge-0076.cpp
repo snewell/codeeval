@@ -8,7 +8,7 @@ namespace
     template <typename T>
     bool subEqual(T lStart, T lEnd, T rStart, T rEnd)
     {
-        while((lStart != lEnd) && (rStart != rEnd) && (*lStart == *rStart))
+        while((lStart != lEnd) && (*lStart == *rStart))
         {
             ++lStart;
             ++rStart;
