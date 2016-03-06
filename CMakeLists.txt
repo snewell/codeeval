@@ -9,6 +9,7 @@ add_executable(echo echo.cpp)
 
 add_challenge(0001) #Fizzbuzz
 add_challenge(0002) #Longest Lines
+add_challenge(0007) #Prefix Expressions
 add_challenge(0008) #Reverse Words
 
 add_challenge(0010) #Mth to Last Element
@@ -26,6 +27,7 @@ add_challenge(0031) #Rightmost Char
 add_challenge(0039) #Happy Numbers
 
 add_challenge(0041) #Array Absurdity
+add_challenge(0045) #Reverse and Add
 add_challenge(0048) #Discount Offers
 
 add_challenge(0051) #Closest Pair
