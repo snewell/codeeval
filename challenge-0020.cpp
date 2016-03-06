@@ -12,10 +12,10 @@ int main(int argc, char ** argv)
     std::getline(input, line);
     while(input)
     {
-        std::for_each(std::begin(line), std::end(line), [](char c) {
-            std::cout << static_cast<char>(std::tolower(c));
+        std::transform(std::begin(line), std::end(line), std::begin(line), [](char c) {
+            return static_cast<char>(std::tolower(c));
         });
-        std::cout << '\n';
+        std::cout << line << '\n';
         std::getline(input, line);
     }
     return 0;
