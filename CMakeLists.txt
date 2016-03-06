@@ -38,5 +38,6 @@ add_challenge(0108) #Computer Terminal
 
 add_challenge(0192) #Compare Points
 
+add_challenge(0200) #Sort Matrix Columns
 add_challenge(0207) #Which Way is Faster?
 add_challenge(0227) #Real Fake
