@@ -38,6 +38,8 @@ add_challenge(0064) #Climbing Stairs
 add_challenge(0071) #Reverse Groups
 add_challenge(0076) #String Rotation
 
+add_challenge(0097) #Find a Writer
+
 add_challenge(0108) #Computer Terminal
 
 add_challenge(0192) #Compare Points
