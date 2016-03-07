@@ -3,7 +3,9 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <unordered_map>
+#include <vector>
+
+#include <unistd.h>
 
 namespace
 {
@@ -34,164 +36,131 @@ namespace
         map.erase(it, std::end(map));
     }
 
+    struct Node
+    {
+        unsigned int score;
+        unsigned int moveCost;
+        bool visited;
+    };
+
     struct State
     {
         State(std::string map)
           : my_map{std::move(map)},
-            my_size{static_cast<std::size_t>(std::sqrt(my_map.length()))},
-            my_score{0},
-            my_moveCost{2}
+            my_size{static_cast<std::size_t>(std::sqrt(my_map.length()))}
         {
             auto start = my_map.find(START);
-            my_y = start / my_size;
-            my_x = start % my_size;
+            my_startY = start / my_size;
+            my_startX = start % my_size;
+            my_costs.resize(my_size * my_size, Node{std::numeric_limits<unsigned int>::max(), 2});
+            getCost(my_startX, my_startY).score = 0;
+            getCost(my_startX, my_startY).visited = true;
         }
 
-        char currentPosition() const noexcept
+        Node& getCost(std::size_t x, std::size_t y)
         {
-            return my_map[(my_y * my_size) + my_x];
+            return my_costs[(y * my_size) + x];
         }
 
-        void clearCurrentPosition() noexcept
+        char getMapCell(std::size_t x,std::size_t y) const noexcept
         {
-            my_map[(my_y * my_size) + my_x] = INVALID;
+            return my_map[(y * my_size) + x];
         }
 
-        char veriticalValue(int offset)
-        {
-            auto newY = my_y + offset;
-            if((newY < 0) || (newY >= my_size))
-            {
-                return INVALID;
-            }
-            return my_map[(newY * my_size) + my_x];
-        }
+        std::vector<Node> my_costs;
 
-        char horizontalValue(int offset)
-        {
-            auto newX = my_x + offset;
-            if((newX < 0) || (newX >= my_size))
-            {
-                return INVALID;
-            }
-            return my_map[(my_y * my_size) + newX];
-        }
-
-        State create(int xOffset, int yOffset)
-        {
-            State ret{*this};
-            ret.my_x += xOffset;
-            ret.my_y += yOffset;
-            return ret;
-        }
-
-        std::string my_map;
-        std::size_t my_size;
-        std::int8_t my_x;
-        std::int8_t my_y;
-        unsigned int my_score;
-        unsigned int my_moveCost;
+        std::string const my_map;
+        std::size_t const my_size;
+        std::size_t my_startX;
+        std::size_t my_startY;
     };
 
-    using States = std::unordered_map<std::int32_t, State>;
-
-    constexpr std::int32_t makeKey(State const &state)
+    void updateCosts(State &state, unsigned newX, unsigned newY, unsigned int currentX, unsigned int currentY)
     {
-        return (state.my_x << 16) | (state.my_y << 8) | state.my_moveCost;
-    }
-
-    void addState(States &states, State state)
-    {
-        auto key = makeKey(state);
-        auto it = states.find(key);
-        if(it == std::end(states))
+        auto extraCost = 0;
+        auto &cellCost = state.getCost(currentX, currentY);
+        auto &newCost = state.getCost(newX, newY);
+        auto newMoveCost = cellCost.moveCost;
+        switch(state.getMapCell(newX, newY))
         {
-            states.emplace(std::make_pair(key, std::move(state)));
-        }
-        else
-        {
-            if(it->second.my_score > state.my_score)
-            {
-                std::swap(it->second, state);
-            }
-        }
-    }
-
-    void runVerticalMove(State &state, States &states, int offset)
-    {
-        switch(state.veriticalValue(offset))
-        {
-        case FINISH:
         case PORT:
+            extraCost += 1;
+            newMoveCost = (cellCost.moveCost == 2) ? 1 : 2;;
+            // fall through
+        case FINISH:
         case FREE:
-            addState(states, state.create(0, offset));
+        case START:
+            extraCost += cellCost.moveCost;
+            break;
+
+        case MOUNTAIN:
+            return;
             break;
         }
-    }
-
-    void runHorizontalMove(State &state, States &states, int offset)
-    {
-        switch(state.horizontalValue(offset))
+        auto totalCost = cellCost.score + extraCost;
+        if((newCost.score > totalCost) || (newCost.moveCost > cellCost.moveCost))
         {
-        case FINISH:
-        case PORT:
-        case FREE:
-            addState(states, state.create(offset, 0));
-            break;
+            newCost.score = totalCost;
+            newCost.moveCost = newMoveCost;
+            newCost.visited = false;
         }
     }
 
-    void runMoves(State &state, States &states)
+    void runMoves(State &state, unsigned int x, unsigned int y)
     {
-        runVerticalMove(state, states, -1);
-        runVerticalMove(state, states,  1);
-        runHorizontalMove(state, states, -1);
-        runHorizontalMove(state, states,  1);
+        if(x > 0)
+        {
+            updateCosts(state, x - 1, y, x, y);
+        }
+        if(x < (state.my_size - 1))
+        {
+            updateCosts(state, x + 1, y, x, y);
+        }
+        if(y > 0)
+        {
+            updateCosts(state, x, y - 1, x, y);
+        }
+        if(y < (state.my_size - 1))
+        {
+            updateCosts(state, x, y + 1, x, y);
+        }
     }
 
-    unsigned int runStates(States states)
+    unsigned int runState(State state)
     {
-        auto ret = std::numeric_limits<unsigned int>::max();
-
-        while(!states.empty())
+        while(true)
         {
-            auto it = std::begin(states);
-            auto &state = it->second;
-
-            switch(state.currentPosition())
+            auto x = state.my_startX;
+            auto y = state.my_startY;
+            auto currentCost = state.getCost(x, y).score;
+            for(auto i = 0; i < state.my_size; ++i)
             {
-            case FINISH:
-                state.my_score += state.my_moveCost;
-                ret = std::min(ret, state.my_score);
-                break;
-
-            case PORT:
-                state.my_score += state.my_moveCost;
-                state.my_score += 1;
-                if(state.my_moveCost == 2)
+                for(auto j = 0; j < state.my_size; ++j)
                 {
-                    state.my_moveCost = 1;
+                    if(!((i == state.my_startX) && (j == state.my_startY)))
+                    {
+                        auto &cost = state.getCost(i, j);
+                        if(!cost.visited && (cost.score < currentCost))
+                        {
+                            x = i;
+                            y = j;
+                            currentCost = cost.score;
+                        }
+                    }
                 }
-                else
-                {
-                    state.my_moveCost = 2;
-                }
-                state.clearCurrentPosition();
-                runMoves(state, states);
-                break;
-
-            case FREE:
-                state.my_score += state.my_moveCost;
-                // fall through intentional
-            case START:
-                state.clearCurrentPosition();
-                runMoves(state, states);
-                break;
             }
-
-            states.erase(it);
+            auto &cell = state.getCost(x, y);
+            if(state.getMapCell(x, y) == FINISH)
+            {
+                return cell.score;
+            }
+            runMoves(state, x, y);
+            cell.visited = true;
+            if((x == state.my_startX) && (y == state.my_startY))
+            {
+                cell.score = std::numeric_limits<unsigned int>::max();
+            }
         }
-        return ret;
     }
 }
 
@@ -204,9 +173,7 @@ int main(int argc, char ** argv)
     while(input)
     {
         trimMap(map);
-        States states;
-        addState(states, State{std::move(map)});
-        auto result = runStates(std::move(states));
+        auto result = runState(State{map});
         std::cout << result << '\n';
         std::getline(input, map);
     }
