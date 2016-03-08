@@ -15,13 +15,16 @@ add_challenge(0008) #Reverse Words
 
 add_challenge(0010) #Mth to Last Element
 add_challenge(0012) #First Non-Repeated Character
+add_challenge(0013) #Remove Characters
 add_challenge(0014) #String Permutations
 add_challenge(0015) #Endianness
+add_challenge(0016) #Number of Ones
 add_challenge(0019) #Bit Positions
 
 add_challenge(0020) #Lowercase
 add_challenge(0022) #Fibonacci Series
 add_challenge(0023) #Multiplication Tables
+add_challenge(0024) #Sum of Integers From File
 add_challenge(0025) #Odd Numbers
 
 add_challenge(0031) #Rightmost Char
