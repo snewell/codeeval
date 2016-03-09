@@ -56,4 +56,7 @@ add_challenge(0197) #Column Names
 
 add_challenge(0200) #Sort Matrix Columns
 add_challenge(0207) #Which Way is Faster?
+
+add_challenge(0210) #Brainfuck
+
 add_challenge(0227) #Real Fake
