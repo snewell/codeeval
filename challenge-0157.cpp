@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <queue>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -32,16 +33,14 @@ namespace
     {
         CellInfo()
           : score{std::numeric_limits<unsigned long>::max()},
-            coordinate{std::numeric_limits<std::uint16_t>::max()},
-            visited{false}
+            coordinate{std::numeric_limits<std::uint16_t>::max()}
             { }
 
         unsigned long score;
         std::uint16_t coordinate;
-        bool visited;
     };
 
-    void update(Maze const &m, std::vector<CellInfo> &cells, std::uint16_t newCoordiante, std::uint16_t currentCoordinate)
+    void update(Maze const &m, std::vector<CellInfo> &cells, std::uint16_t newCoordiante, std::uint16_t currentCoordinate, std::queue<std::uint16_t> &coordinates)
     {
         switch(m.my_map[newCoordiante])
         {
@@ -56,31 +55,32 @@ namespace
                 {
                     newCell.score = current.score + 1;
                     newCell.coordinate = currentCoordinate;
+                    coordinates.push(newCoordiante);
                 }
             }
             break;
         }
     }
 
-    void runMoves(Maze const &m, std::vector<CellInfo> &cells, std::uint16_t coordinate)
+    void runMoves(Maze const &m, std::vector<CellInfo> &cells, std::uint16_t coordinate, std::queue<std::uint16_t> &coordinates)
     {
         auto x = coordinate % m.my_width;
         auto y = coordinate / m.my_width;
         if(x > 0)
         {
-            update(m, cells, coordinate - 1, coordinate);
+            update(m, cells, coordinate - 1, coordinate, coordinates);
         }
         if(x < (m.my_width - 1))
         {
-            update(m, cells, coordinate + 1, coordinate);
+            update(m, cells, coordinate + 1, coordinate, coordinates);
         }
         if(y > 0)
         {
-            update(m, cells, coordinate - m.my_width, coordinate);
+            update(m, cells, coordinate - m.my_width, coordinate, coordinates);
         }
         if(y < (m.my_height - 1))
         {
-            update(m, cells, coordinate + m.my_width, coordinate);
+            update(m, cells, coordinate + m.my_width, coordinate, coordinates);
         }
     }
 
@@ -91,30 +91,22 @@ namespace
         auto found = false;
         auto startX = m.my_map.find(' ');
         pathInfo[startX].score = 0;
-        pathInfo[startX].visited = true;
         auto const size = m.my_map.length();
 
+        std::queue<std::uint16_t> coordinates;
+
+        coordinates.push(startX);
         while(!found)
         {
-            auto coordinate = std::uint16_t{static_cast<std::uint16_t>(startX)};
-            unsigned long shortest = std::numeric_limits<unsigned long>::max();
-            for(auto i = 0; i < size; ++ i)
-            {
-                auto &cell = pathInfo[i];
-                if(!cell.visited && (cell.score < shortest))
-                {
-                    coordinate = i;
-                    shortest = cell.score;
-                }
-            }
+            auto coordinate = coordinates.front();
+            coordinates.pop();
             if(coordinate == m.my_exitX)
             {
                 found = true;
             }
             else
             {
-                runMoves(m, pathInfo, coordinate);
-                pathInfo[coordinate].visited = true;
+                runMoves(m, pathInfo, coordinate, coordinates);
             }
         }
         auto writeX = m.my_exitX;
