@@ -12,6 +12,7 @@ add_challenge(0002) #Longest Lines
 add_challenge(0005) #Detecting Cycles
 add_challenge(0007) #Prefix Expressions
 add_challenge(0008) #Reverse Words
+add_challenge(0009) #Stack Implementation
 
 add_challenge(0010) #Mth to Last Element
 add_challenge(0012) #First Non-Repeated Character
