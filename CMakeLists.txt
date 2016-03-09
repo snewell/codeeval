@@ -36,6 +36,7 @@ add_challenge(0045) #Reverse and Add
 add_challenge(0048) #Discount Offers
 
 add_challenge(0051) #Closest Pair
+add_challenge(0052) #Text Dollar
 
 add_challenge(0064) #Climbing Stairs
 
