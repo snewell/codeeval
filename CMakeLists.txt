@@ -30,6 +30,7 @@ add_challenge(0024) #Sum of Integers From File
 add_challenge(0025) #Odd Numbers
 
 add_challenge(0031) #Rightmost Char
+add_challenge(0038) #String List
 add_challenge(0039) #Happy Numbers
 
 add_challenge(0041) #Array Absurdity
