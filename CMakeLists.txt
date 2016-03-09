@@ -20,6 +20,7 @@ add_challenge(0013) #Remove Characters
 add_challenge(0014) #String Permutations
 add_challenge(0015) #Endianness
 add_challenge(0016) #Number of Ones
+add_challenge(0018) #Multiples of a Number
 add_challenge(0019) #Bit Positions
 
 add_challenge(0020) #Lowercase
