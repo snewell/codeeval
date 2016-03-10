@@ -9,6 +9,8 @@ add_executable(echo echo.cpp)
 
 add_challenge(0001) #Fizzbuzz
 add_challenge(0002) #Longest Lines
+add_challenge(0003) #Prime Palindrome
+add_challenge(0004) #Sum of Primes
 add_challenge(0005) #Detecting Cycles
 add_challenge(0007) #Prefix Expressions
 add_challenge(0008) #Reverse Words
