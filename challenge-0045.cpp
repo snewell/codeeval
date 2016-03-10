@@ -10,7 +10,6 @@ namespace
     {
         auto middle = std::begin(val);
         std::advance(middle, std::distance(std::begin(val), std::end(val)) / 2);
-        auto rev = std::string::const_reverse_iterator{std::end(val)};
         return std::equal(std::begin(val), middle, val.rbegin());
     }
 
@@ -23,16 +22,10 @@ namespace
         return ret;
     }
 
-    int reverse(std::string val)
+    unsigned long long reverse(std::string val)
     {
-        auto middle = std::begin(val);
-        std::advance(middle, std::distance(std::begin(val), std::end(val)) / 2);
-        auto rev = std::string::reverse_iterator{std::end(val)};
-        std::for_each(std::begin(val), middle, [&rev](char &ch) {
-            std::swap(ch, *rev);
-            ++rev;
-        });
-        return extract<int>(val);
+        std::reverse(std::begin(val), std::end(val));
+        return extract<unsigned long long>(val);
     }
 
     int makePalindrome(std::string &val)
@@ -40,10 +33,8 @@ namespace
         auto ret = 0;
         while(!isPalindrome(val))
         {
-            auto temp = extract<int>(val) + reverse(val);
-            std::ostringstream os;
-            os << temp;
-            val = os.str();
+            auto temp = extract<unsigned long long>(val) + reverse(val);
+            val = std::to_string(temp);
             ++ret;
         }
         return ret;
