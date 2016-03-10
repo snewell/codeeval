@@ -30,6 +30,7 @@ add_challenge(0022) #Fibonacci Series
 add_challenge(0023) #Multiplication Tables
 add_challenge(0024) #Sum of Integers From File
 add_challenge(0025) #Odd Numbers
+add_challenge(0027) #Decimal to Binary
 
 add_challenge(0031) #Rightmost Char
 add_challenge(0038) #String List
