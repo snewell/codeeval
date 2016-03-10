@@ -52,6 +52,8 @@ add_challenge(0108) #Computer Terminal
 
 add_challenge(0157) #The Labyrinth
 
+add_challenge(0185) #Glue Shredded Pieces
+
 add_challenge(0192) #Compare Points
 add_challenge(0197) #Column Names
 
