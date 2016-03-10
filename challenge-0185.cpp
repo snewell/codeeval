@@ -64,17 +64,12 @@ int main(int argc, char ** argv)
             it = next;
         }
         order(strips);
-        auto i = 0u;
-        auto stripSize = strips.front().size();
-        for(; i < strips.size(); i += stripSize)
-        {
-            std::cout << strips[i];
-        }
-        if((i - stripSize) != (strips.size() - 1))
-        {
-            auto startPos = i - strips.size() + 1;
-            std::cout << strips.back().substr(startPos);
-        }
+        auto printIt = std::begin(strips);
+        std::cout << *printIt;
+        std::advance(printIt, 1);
+        std::for_each(printIt, std::end(strips), [](std::string const &s) {
+            std::cout << s.back();
+        });
         std::cout << '\n';
         std::getline(input, line);
     }

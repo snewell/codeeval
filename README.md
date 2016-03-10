@@ -19,3 +19,6 @@ needs a copy of the input and output folders to be local but a symlink is fine.
   doesn't work so I need to permutate through all possible solutions.
 * Challenge 64 (Climbing Stairs) fails on large inputs.  Off the top of my
   head it may be int overflow but I haven't done any investigation.
+* Challenge 185 (Glue Shredded Pieces) looks like it has a problem if parts of
+  the phrase appear more than once.  I need to think about how to handle that
+  case.
