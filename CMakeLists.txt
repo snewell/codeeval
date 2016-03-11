@@ -66,3 +66,5 @@ add_challenge(0207) #Which Way is Faster?
 add_challenge(0210) #Brainfuck
 
 add_challenge(0227) #Real Fake
+
+add_challenge(0237) #Panacea - Truth or Lie
