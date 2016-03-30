@@ -33,6 +33,7 @@ add_challenge(0025) #Odd Numbers
 add_challenge(0027) #Decimal to Binary
 
 add_challenge(0031) #Rightmost Char
+add_challenge(0035) #E-Mail Validation
 add_challenge(0038) #String List
 add_challenge(0039) #Happy Numbers
 
@@ -68,3 +69,4 @@ add_challenge(0210) #Brainfuck
 add_challenge(0227) #Real Fake
 
 add_challenge(0237) #Panacea - Truth or Lie
+add_challenge(0239) #As Quick as a Flash
