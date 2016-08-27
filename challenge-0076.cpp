@@ -16,19 +16,21 @@ namespace
             auto rStart = std::find(std::begin(rhs), rEnd, lhs[0]);
             while(rStart != rEnd)
             {
-                auto diff = std::distance(rStart, rEnd);
-                auto lMiddle = lStart;
-                std::advance(lMiddle, diff);
-                if(std::equal(lStart, lMiddle, rStart) &&
-                   std::equal(lMiddle, lEnd, std::begin(rhs)))
+                if(std::equal(rStart, rEnd, lStart))
                 {
-                    return true;
+                    auto diff = std::distance(rStart, rEnd);
+                    auto lMiddle = lStart;
+                    std::advance(lMiddle, diff);
+                    if(std::equal(lMiddle, lEnd, std::begin(rhs)))
+                    {
+                        return true;
+                    }
                 }
                 ++rStart;
                 rStart = std::find(rStart, rEnd, lhs[0]);
             }
         }
-        return false;
+        return ((lhs.length() == 0) && (rhs.length() == 0));
     }
 }
 
