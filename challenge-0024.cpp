@@ -3,6 +3,7 @@
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
     int val;
     auto sum = 0;

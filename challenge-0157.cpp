@@ -91,7 +91,6 @@ namespace
         auto found = false;
         auto startX = m.my_map.find(' ');
         pathInfo[startX].score = 0;
-        auto const size = m.my_map.length();
 
         std::queue<std::uint16_t> coordinates;
 
@@ -138,7 +137,7 @@ namespace
     template <typename ...Ts>
     std::basic_ostream<Ts...>& operator << (std::basic_ostream<Ts...> &os, Maze const &m)
     {
-        for(auto i = 0; i < m.my_height; ++i)
+        for(std::size_t i = 0; i < m.my_height; ++i)
         {
             os << m.my_map.substr(i * m.my_height, m.my_width) << '\n';
         }
@@ -148,6 +147,7 @@ namespace
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
 
     auto m = buildMaze(input);

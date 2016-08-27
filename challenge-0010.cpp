@@ -6,6 +6,7 @@
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
     std::vector<char> vals;
     char ch;
@@ -20,7 +21,7 @@ int main(int argc, char ** argv)
         else
         {
             input.unget();
-            int count;
+            std::vector<char>::size_type count;
             input >> count;
             if(count <= vals.size())
             {

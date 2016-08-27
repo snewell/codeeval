@@ -38,6 +38,7 @@ namespace
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     unsigned int x;
     unsigned int y;
     unsigned int n;

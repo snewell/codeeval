@@ -34,12 +34,16 @@ namespace
         case Comparison::GREATER:
             std::cout << greater;
             break;
+
+        case Comparison::EQUAL:
+            break;
         }
     }
 }
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
     int x1;
     int x2;

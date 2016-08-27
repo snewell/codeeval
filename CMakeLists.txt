@@ -1,5 +1,12 @@
-project("codeeval" CXX)
 cmake_minimum_required(VERSION 3.0)
+cmake_policy(VERSION 3.0)
+
+project("codeeval"
+        LANGUAGES CXX
+        VERSION   0.1.0)
+
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 11)
 
 function   (add_challenge val)
     add_executable(challenge-${val} challenge-${val}.cpp)
@@ -33,7 +40,7 @@ add_challenge(0025) #Odd Numbers
 add_challenge(0027) #Decimal to Binary
 
 add_challenge(0031) #Rightmost Char
-add_challenge(0035) #E-Mail Validation
+#add_challenge(0035) #E-Mail Validation
 add_challenge(0038) #String List
 add_challenge(0039) #Happy Numbers
 

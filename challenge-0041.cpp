@@ -1,9 +1,11 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
     unsigned int size;
     input >> size;
@@ -19,7 +21,7 @@ int main(int argc, char ** argv)
             vals.push_back(val);
         }
         std::sort(std::begin(vals), std::end(vals));
-        for(auto i = 0; i < vals.size(); ++i)
+        for(decltype(vals.size()) i = 0; i < vals.size(); ++i)
         {
             if(vals[i] == vals[i + 1])
             {

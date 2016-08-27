@@ -95,6 +95,7 @@ namespace
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
     std::string line;
 
@@ -104,9 +105,9 @@ int main(int argc, char ** argv)
         auto matrix = parseMatrix(line);
 
         std::sort(std::begin(matrix.my_columns), std::end(matrix.my_columns));
-        for(auto i = 0; i < matrix.my_columns.size(); ++i)
+        for(decltype(matrix.my_columns.size()) i = 0; i < matrix.my_columns.size(); ++i)
         {
-            for(auto j = 0; j < matrix.my_columns[i].my_vals.size(); ++j)
+            for(decltype(matrix.my_columns[i].my_vals.size()) j = 0; j < matrix.my_columns[i].my_vals.size(); ++j)
             {
                 if((i != 0) || (j != 0))
                 {

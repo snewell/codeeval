@@ -145,9 +145,9 @@ namespace
             auto y = state.my_startY;
             auto method = 0;
             auto currentCost = state.getCost(x, y).score[0];
-            for(auto i = 0; i < state.my_size; ++i)
+            for(std::size_t i = 0; i < state.my_size; ++i)
             {
-                for(auto j = 0; j < state.my_size; ++j)
+                for(std::size_t j = 0; j < state.my_size; ++j)
                 {
                     if(!((i == state.my_startX) && (j == state.my_startY)))
                     {
@@ -184,6 +184,7 @@ namespace
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::ifstream input{argv[1]};
     std::string map;
 

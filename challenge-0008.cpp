@@ -7,6 +7,7 @@
 
 int main(int argc, char ** argv)
 {
+    (void) argc;
     std::vector<std::string> strings;
     std::ifstream input{argv[1]};
    
