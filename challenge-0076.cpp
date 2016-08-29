@@ -5,32 +5,38 @@
 
 namespace
 {
-    bool isRotation(std::string lhs, std::string rhs)
+    template <typename LB, typename LE, typename RB, typename RE>
+    bool isRotation(LB const lStart, LE const lEnd, RB const rStart, RE const rEnd)
     {
-        if(lhs.length() == rhs.length())
-        {
-            auto const lStart = std::begin(lhs);
-            auto const lEnd = std::end(lhs);
+        auto const lLen = std::distance(lStart, lEnd);
+        auto const rLen = std::distance(rStart, rEnd);
 
-            auto const rEnd = std::end(rhs);
-            auto rStart = std::find(std::begin(rhs), rEnd, lhs[0]);
-            while(rStart != rEnd)
+        if(lLen == rLen)
+        {
+            // make sure we have the same lengths
+            if(lLen == 0)
             {
-                if(std::equal(rStart, rEnd, lStart))
+                // if both strings are 0 we can exit now
+                return true;
+            }
+            auto rCurrent = std::find(rStart, rEnd, *lStart);
+            while(rCurrent != rEnd)
+            {
+                if(std::equal(rCurrent, rEnd, lStart))
                 {
-                    auto diff = std::distance(rStart, rEnd);
+                    auto diff = std::distance(rCurrent, rEnd);
                     auto lMiddle = lStart;
                     std::advance(lMiddle, diff);
-                    if(std::equal(lMiddle, lEnd, std::begin(rhs)))
+                    if(std::equal(lMiddle, lEnd, rStart))
                     {
                         return true;
                     }
                 }
-                ++rStart;
-                rStart = std::find(rStart, rEnd, lhs[0]);
+                std::advance(rCurrent, 1);
+                rCurrent = std::find(rCurrent, rEnd, *lStart);
             }
         }
-        return ((lhs.length() == 0) && (rhs.length() == 0));
+        return false;
     }
 }
 
@@ -42,10 +48,12 @@ int main(int argc, char ** argv)
     std::getline(input, line);
     while(input)
     {
-        auto split = std::find(std::begin(line), std::end(line), ',');
-        std::string lhs{std::begin(line), split};
-        std::string rhs{++split, std::end(line)};
-        if(isRotation(std::move(lhs), std::move(rhs)))
+        auto lBegin = std::begin(line);
+        auto rEnd = std::end(line);
+        auto lEnd = std::find(lBegin, rEnd, ',');
+        auto rStart = lEnd;
+        std::advance(rStart, 1);
+        if(isRotation(lBegin, lEnd, rStart, rEnd))
         {
             std::cout << "True\n";
         }
